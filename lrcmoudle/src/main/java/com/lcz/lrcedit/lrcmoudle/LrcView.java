@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
 import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -20,17 +21,25 @@ public class LrcView extends View{
     private Paint mPaint;
     private Paint centerPaint;
     private Paint linePaint;
-    private String lrcString;
+
     private int lineNum;
     private int centerLine;
+    //存储歌词变量
+    private String lrcString;
+
+    public List<String> getLrcStrings() {
+        return lrcStrings;
+    }
+
+    private List<String> lrcStrings;
 
     //构造函数
-    public LrcView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public LrcView(Context context, AttributeSet attributeSet, int defStyleAttr) {
+        super(context, attributeSet, defStyleAttr);
     }
-    public LrcView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
+    public LrcView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        init(attributeSet);
     }
     public LrcView(Context context) {
         super(context);
