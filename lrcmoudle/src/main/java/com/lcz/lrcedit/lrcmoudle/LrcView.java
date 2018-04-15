@@ -109,7 +109,7 @@ public class LrcView extends View{
         for(int i=1;i<lineNum/2+1;i++){
             if(centerLine - i >= 0){
                 float yAxis = -i*(-top+bottom);
-                canvas.drawText(strings[centerLine-i]+"",point.x,point.y+yAxis,paint);
+                canvas.drawText(strings[centerLine-i]+"",point.x,point.y-yAxis,paint);
             }
         }
         canvas.drawLine(0, canvas.getHeight() / 2, canvas.getWidth(), canvas.getHeight() / 2, linePaint);
