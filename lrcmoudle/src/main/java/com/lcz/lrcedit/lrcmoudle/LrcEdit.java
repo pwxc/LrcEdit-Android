@@ -21,6 +21,8 @@ import java.util.List;
 
 public class LrcEdit extends View {
 
+
+
     private List<String> lrcStrings;
     private TextPaint textPaint;
     private String TAG = "view";
@@ -42,7 +44,9 @@ public class LrcEdit extends View {
     public LrcEdit(Context context) {
         super(context);
     }
-
+    public List<String> getLrcStrings() {
+        return lrcStrings;
+    }
     private void init(){
         lrcStrings = new ArrayList<>();
         textPaint = new TextPaint();
