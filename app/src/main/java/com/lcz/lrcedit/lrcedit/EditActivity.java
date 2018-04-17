@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import com.lcz.lrcedit.lrcmoudle.LrcEdit;
+import com.lcz.lrcedit.lrcmoudle.LrcString;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,7 +83,7 @@ public class EditActivity extends AppCompatActivity {
     //保存文件函数
     private void save(){
         String fileName = "test.txt";
-        List<String> lrcList = lrcEdit.getLrcStrings();
+        List<LrcString> lrcList = lrcEdit.getLrcStrings();
         try{
             File file = new File(Environment.getExternalStorageDirectory(), fileName);
             if (file.exists()) {
@@ -91,8 +92,8 @@ public class EditActivity extends AppCompatActivity {
             file.createNewFile();
             FileOutputStream outStream = new FileOutputStream(file);
 
-            for(String s:lrcList){
-                outStream.write((s+'\n').getBytes());
+            for(LrcString s:lrcList){
+                outStream.write((s.getText()+'\n').getBytes());
             }
             Toast.makeText(this,"saved",Toast.LENGTH_SHORT).show();
             outStream.close();

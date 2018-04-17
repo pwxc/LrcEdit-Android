@@ -22,8 +22,8 @@ import java.util.List;
 public class LrcEdit extends View {
 
 
-
-    private List<String> lrcStrings;
+    private boolean isNewAdd = false;
+    private List<LrcString> lrcStrings;
     private TextPaint textPaint;
     private String TAG = "view";
     private int lastY;
@@ -44,7 +44,7 @@ public class LrcEdit extends View {
     public LrcEdit(Context context) {
         super(context);
     }
-    public List<String> getLrcStrings() {
+    public List<LrcString> getLrcStrings() {
         return lrcStrings;
     }
     private void init(){
@@ -61,44 +61,52 @@ public class LrcEdit extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(endLine<=lrcStrings.size()&&endLine>0){
-            textDraw(lrcStrings,canvas,textPaint,endLine);
+            textDraw(lrcStrings,canvas,textPaint);
             currentLine = endLine;
         }
 
     }
-    private void reDraw(int endLine){
-        this.endLine = endLine;
-        invalidate();
-    }
-    private void textDraw(List<String> strings, Canvas canvas, Paint paint,int endLine){
+
+    private void textDraw(List<LrcString> strings, Canvas canvas, Paint paint){
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float top=fontMetrics.top;
         float bottom=fontMetrics.bottom;
         float offset=bottom - top;
-        lrcOffset = offset;
-        for(int i=0;i<viewHeight/lrcOffset;i++){
-            if(endLine-1-i<0){
-                break;
+        float totleOffset = 0;
+        int stringLen = strings.size();
+        for(int i=0;i<stringLen;i++){
+            if (i > 0) {
+                totleOffset += strings.get(i - 1).getHeight() + offset;
             }
-            StaticLayout staticLayout = new StaticLayout(strings.get(endLine-1-i)+"", textPaint, (int) getWidth(),
-                    Layout.Alignment.ALIGN_CENTER, 1f, 0f, false);
-            drawText(canvas, staticLayout, canvas.getHeight()-offset*(i+1));
+            if(i==stringLen-1) {
+                lrcOffset = canvas.getHeight() - totleOffset - 2*offset -strings.get(stringLen-1).getHeight();
+            }
+            drawText(canvas, strings.get(i).getStaticLayout(), totleOffset);
         }
+        if(isNewAdd){
+            scrollTo(0, -(int)(lrcOffset));
+            isNewAdd = false;
+        }
+
 
     }
 
     private void drawText(Canvas canvas, StaticLayout staticLayout, float y) {
         canvas.save();
-        canvas.translate(0, y - staticLayout.getHeight() / 2);
+        canvas.translate(0, y);
         staticLayout.draw(canvas);
         canvas.restore();
     }
     //添加歌词函数
     public void addLrcString(String string){
-        lrcStrings.add(string);
+        LrcString lrcString= new LrcString(string);
+        lrcStrings.add(lrcString);
         endLine = lrcStrings.size();
+        lrcStrings.get(endLine-1).init(textPaint, getWidth());
+        isNewAdd = true;
         invalidate();
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -139,13 +147,8 @@ public class LrcEdit extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            int y = (int)(e1.getY()-e2.getY());
-            if (200<Math.abs(y)){
-                    endLine += y/200;
-                    if(endLine<=lrcStrings.size()&&endLine>=(int)viewHeight/lrcOffset-1){
-                        invalidate();
-                    }
-                }
+            int y = (int)distanceY;
+            scrollBy(0,y);
             return true;
         }
 
@@ -159,56 +162,4 @@ public class LrcEdit extends View {
             return super.onSingleTapConfirmed(e);
         }
     };
-
-    @Override
-    public Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
-
-        SavedState savedState = new SavedState(superState);
-        savedState.edline = currentLine;
-        Log.e("onSaveInstanceState()",savedState.edline+"");
-        return savedState;
-    }
-
-    static class SavedState extends BaseSavedState{
-
-        private int edline;
-
-        public SavedState(Parcel source) {
-            super(source);
-            edline = source.readInt();
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeInt(edline);
-        }
-
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>(){
-
-            @Override
-            public SavedState createFromParcel(Parcel source) {
-                return new SavedState(source);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        SavedState ss = (SavedState) state;
-        Log.e("onRestoreInstanceState",ss.edline+"");
-        super.onRestoreInstanceState(ss.getSuperState());
-        //调用别的方法，把保存的数据重新赋值给当前的自定义View
-        reDraw(ss.edline);
-    }
 }
