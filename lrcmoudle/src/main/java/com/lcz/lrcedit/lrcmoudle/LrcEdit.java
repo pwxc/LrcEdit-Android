@@ -89,15 +89,7 @@ public class LrcEdit extends View {
             scrollTo(0, -(int)(strings.get(stringLen-1).getOffset()));
             isNewAdd = false;
         }
-        //这条式子真是反人类，重构的时候优先改善
-        float a = -lrcStrings.get(lrcStrings.size()-1).getOffset()+getHeight()-lrcStrings.get(lrcStrings.size()-1).getHeight()-3*offsetE;
-        if(getScrollY()<-lrcStrings.get(0).getOffset()-offsetE){
-            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()+offsetE));
-        }
-        if(getScrollY()>a){
-            scrollTo(0, (int)(a));
-        }
-        Log.e("Get TOP",getScrollY()+"");
+
 
 
     }
@@ -156,17 +148,25 @@ public class LrcEdit extends View {
             return true;
         }
 
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()));
-            return true;
-        }
+//        @Override
+//        public boolean onDoubleTap(MotionEvent e) {
+//            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()));
+//            return true;
+//        }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             int y = (int)distanceY;
             if(!lrcStrings.isEmpty()){
                 scrollBy(0,y);
+                //这条式子真是反人类，重构的时候优先改善
+                float a = -lrcStrings.get(lrcStrings.size()-1).getOffset()+getHeight()-lrcStrings.get(lrcStrings.size()-1).getHeight()-3*offsetE;
+                if(getScrollY()<-lrcStrings.get(0).getOffset()-offsetE){
+                    scrollTo(0, -(int)(lrcStrings.get(0).getOffset()+offsetE));
+                }
+                if(getScrollY()>a){
+                    scrollTo(0, (int)(a));
+                }
             }
 
             return true;
