@@ -15,6 +15,16 @@ public class LrcString {
 
     private String text;
     private StaticLayout staticLayout;
+    private float offset;
+
+    public float getOffset() {
+        return offset;
+    }
+
+    public void setOffset(float offset) {
+        this.offset = offset;
+    }
+
     public String getText() {
         return text;
     }

@@ -30,7 +30,7 @@ public class LrcEdit extends View {
     private int viewHeight;
     private float lrcOffset;
     private int endLine;
-    private int offsetCounter;
+    private float offsetE;
     private int currentLine;
     private GestureDetector gestureDetector;
 
@@ -72,6 +72,7 @@ public class LrcEdit extends View {
         float top=fontMetrics.top;
         float bottom=fontMetrics.bottom;
         float offset=bottom - top;
+        offsetE = offset;
         float totleOffset = 0;
         int stringLen = strings.size();
         for(int i=0;i<stringLen;i++){
@@ -80,13 +81,23 @@ public class LrcEdit extends View {
             }
             if(i==stringLen-1) {
                 lrcOffset = canvas.getHeight() - totleOffset - 2*offset -strings.get(stringLen-1).getHeight();
+                strings.get(i).setOffset(lrcOffset);
             }
             drawText(canvas, strings.get(i).getStaticLayout(), totleOffset);
         }
         if(isNewAdd){
-            scrollTo(0, -(int)(lrcOffset));
+            scrollTo(0, -(int)(strings.get(stringLen-1).getOffset()));
             isNewAdd = false;
         }
+        //这条式子真是反人类，重构的时候优先改善
+        float a = -lrcStrings.get(lrcStrings.size()-1).getOffset()+getHeight()-lrcStrings.get(lrcStrings.size()-1).getHeight()-3*offsetE;
+        if(getScrollY()<-lrcStrings.get(0).getOffset()-offsetE){
+            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()+offsetE));
+        }
+        if(getScrollY()>a){
+            scrollTo(0, (int)(a));
+        }
+        Log.e("Get TOP",getScrollY()+"");
 
 
     }
@@ -146,9 +157,18 @@ public class LrcEdit extends View {
         }
 
         @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()));
+            return true;
+        }
+
+        @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             int y = (int)distanceY;
-            scrollBy(0,y);
+            if(!lrcStrings.isEmpty()){
+                scrollBy(0,y);
+            }
+
             return true;
         }
 
