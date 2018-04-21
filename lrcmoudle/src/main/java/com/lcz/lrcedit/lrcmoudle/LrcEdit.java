@@ -31,7 +31,6 @@ public class LrcEdit extends View {
     private float lrcOffset;
     private int endLine;
     private float offsetE;
-    private int currentLine;
     private GestureDetector gestureDetector;
 
     public LrcEdit(Context context, AttributeSet attributeSet, int defStyleAttr) {
@@ -60,9 +59,8 @@ public class LrcEdit extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(endLine<=lrcStrings.size()&&endLine>0){
+        if(endLine>0){
             textDraw(lrcStrings,canvas,textPaint);
-            currentLine = endLine;
         }
 
     }
@@ -109,6 +107,14 @@ public class LrcEdit extends View {
         isNewAdd = true;
         invalidate();
     }
+    //删除最后一句歌词
+    public void removeLrcString(){
+        lrcStrings.remove(endLine-1);
+        isNewAdd = true;
+        endLine = lrcStrings.size();
+        invalidate();
+    }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -144,15 +150,16 @@ public class LrcEdit extends View {
     private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
-            endLine = currentLine;
             return true;
         }
 
-//        @Override
-//        public boolean onDoubleTap(MotionEvent e) {
-//            scrollTo(0, -(int)(lrcStrings.get(0).getOffset()));
-//            return true;
-//        }
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            if(!lrcStrings.isEmpty()){
+                removeLrcString();
+            }
+            return true;
+        }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {

@@ -50,8 +50,6 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
