@@ -19,4 +19,5 @@
 
 演示：
 
-<img src="https://lichaozhong.oss-cn-beijing.aliyuncs.com/SVID_20180418_104606_1.gif?Expires=1524023690&OSSAccessKeyId=TMP.AQFy887KjAsFndmIDVsASJzVd7JouUS0L1vTVuvaR9nDUQdG9qAziR2K4IiEADAtAhQNvG6zDGgMABvz3wSqGP0IfTAQuAIVALfHO5YZ61AAxxawIk1bIrazjSiZ&Signature=re4N4xUD4deOvgXcbtoltNq2JFI%3D" style="zoom:50%" />
+<img src="
+https://lichaozhong.oss-cn-beijing.aliyuncs.com/SVID_20180418_104606_1.gif" style="zoom:50%" />
