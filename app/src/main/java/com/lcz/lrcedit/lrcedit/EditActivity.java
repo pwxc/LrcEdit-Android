@@ -1,11 +1,13 @@
 package com.lcz.lrcedit.lrcedit;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ public class EditActivity extends AppCompatActivity {
     private LrcEdit lrcEdit;
     private Button addButton;
     private EditText editText;
+    private String fileName = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,29 +64,61 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save:
-                if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }else if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                }
-                else {
-                    save();
-
-                }
+                mySave();
                 break;
             default:
         }
         return true;
     }
 
+    public void mySave(){
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
+        final EditText titleEditText = (EditText) view.findViewById(R.id.titleEdit);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_save)//设置标题的图片
+                .setTitle("请输入歌曲名")//设置对话框的标题
+                .setView(view)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        fileName = titleEditText.getText().toString();
+                        dialog.dismiss();
+                        if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                                PackageManager.PERMISSION_GRANTED){
+                            ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }else if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                                PackageManager.PERMISSION_GRANTED){
+                            ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                        }
+                        else {
+                            saveFile();
+
+                        }
+                    }
+                }).create();
+        dialog.show();
+    }
+
+
+
+
     //保存文件函数
-    private void save(){
-        String fileName = "test.txt";
+    private void saveFile(){
+        String fileType = ".txt";
         List<LrcString> lrcList = lrcEdit.getLrcStrings();
         try{
-            File file = new File(Environment.getExternalStorageDirectory(), fileName);
+
+            File file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit", fileName+fileType);
             if (file.exists()) {
                 file.delete();
             }
@@ -106,7 +141,7 @@ public class EditActivity extends AppCompatActivity {
         switch (requestCode){
             case 1:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    save();
+                    saveFile();
                 }else {
                     Toast.makeText(this, "You denied the permission",Toast.LENGTH_SHORT).show();
                 }
@@ -114,4 +149,5 @@ public class EditActivity extends AppCompatActivity {
             default:
         }
     }
+
 }

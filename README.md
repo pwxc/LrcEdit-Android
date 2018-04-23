@@ -4,20 +4,20 @@
 
 已实现功能：
 * 添加歌词
-* 保存为TXT文件(根目录下test.txt文件)
+* 保存为TXT文件(根目录+/lrcEdit下)
 * 丑陋的界面
 * 较差的用户体验
+* 自定义文件名
 
 待实现的功能：
 * 添加歌词时间
 * 保存为lrc文件格式
-* 自定义文件名
 * 修改已添加的歌词
 * 预览歌词
 * 精美的界面
 * 良好的用户体验
 
-演示：
+演示(非最新)：
 
 <img src="
 https://lichaozhong.oss-cn-beijing.aliyuncs.com/SVID_20180418_104606_1.gif" style="zoom:50%" />
