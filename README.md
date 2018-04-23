@@ -19,5 +19,4 @@
 
 演示(非最新)：
 
-<img src="
-https://lichaozhong.oss-cn-beijing.aliyuncs.com/SVID_20180418_104606_1.gif" style="zoom:50%" />
+<img src="https://lichaozhong.oss-cn-beijing.aliyuncs.com/SVID_20180418_104606_1.gif" style="zoom:50%" />
