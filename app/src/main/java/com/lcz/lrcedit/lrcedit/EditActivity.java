@@ -128,7 +128,7 @@ public class EditActivity extends AppCompatActivity {
             for(LrcString s:lrcList){
                 outStream.write((s.getText()+'\n').getBytes());
             }
-            Toast.makeText(this,"saved",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType,Toast.LENGTH_SHORT).show();
             outStream.close();
         }catch (Exception e){
             e.printStackTrace();
