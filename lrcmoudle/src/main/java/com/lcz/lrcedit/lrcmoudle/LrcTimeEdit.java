@@ -15,4 +15,5 @@ public class LrcTimeEdit extends View {
     public LrcTimeEdit(Context context) {
         super(context);
     }
+
 }

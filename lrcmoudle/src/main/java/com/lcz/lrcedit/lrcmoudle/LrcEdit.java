@@ -29,7 +29,7 @@ public class LrcEdit extends View {
     private int lastY;
     private int viewHeight;
     private float lrcOffset;
-    private int endLine;
+    private int endLine=0;
     private float offsetE;
     private GestureDetector gestureDetector;
 
@@ -59,13 +59,14 @@ public class LrcEdit extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(endLine>0){
+        if(endLine>=0){
             textDraw(lrcStrings,canvas,textPaint);
         }
 
     }
 
-    private void textDraw(List<LrcString> strings, Canvas canvas, Paint paint){
+
+    private void textDraw(List<LrcString> strings, Canvas canvas, TextPaint paint){
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float top=fontMetrics.top;
         float bottom=fontMetrics.bottom;
@@ -73,6 +74,9 @@ public class LrcEdit extends View {
         offsetE = offset;
         float totleOffset = 0;
         int stringLen = strings.size();
+        for(LrcString temp:strings){
+            temp.init(paint,getWidth());
+        }
         for(int i=0;i<stringLen;i++){
             if (i > 0) {
                 totleOffset += strings.get(i - 1).getHeight() + offset;
@@ -102,16 +106,16 @@ public class LrcEdit extends View {
     public void addLrcString(String string){
         LrcString lrcString= new LrcString(string);
         lrcStrings.add(lrcString);
-        endLine = lrcStrings.size();
-        lrcStrings.get(endLine-1).init(textPaint, getWidth());
+//        endLine = lrcStrings.size();
+//        lrcStrings.get(endLine-1).init(textPaint, getWidth());
         isNewAdd = true;
         invalidate();
     }
+
     //删除最后一句歌词
     public void removeLrcString(){
-        lrcStrings.remove(endLine-1);
+        lrcStrings.remove(lrcStrings.size()-1);
         isNewAdd = true;
-        endLine = lrcStrings.size();
         invalidate();
     }
 

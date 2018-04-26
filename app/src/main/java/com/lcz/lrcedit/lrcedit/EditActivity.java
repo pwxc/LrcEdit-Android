@@ -2,6 +2,7 @@ package com.lcz.lrcedit.lrcedit;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.lcz.lrcedit.lrcmoudle.LrcString;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
@@ -68,7 +71,13 @@ public class EditActivity extends AppCompatActivity {
                 break;
             case R.id.timer:
                 if(!lrcEdit.getLrcStrings().isEmpty()){
-
+                    ArrayList<String> tempArraylist = new ArrayList<>();
+                    Intent intent = new Intent(EditActivity.this, EditTimeActivity.class);
+                    for(LrcString lrcString:lrcEdit.getLrcStrings()){
+                        tempArraylist.add(lrcString.getText());
+                    }
+                    intent.putStringArrayListExtra("key",tempArraylist);
+                    startActivity(intent);
                 }
                 break;
             default:

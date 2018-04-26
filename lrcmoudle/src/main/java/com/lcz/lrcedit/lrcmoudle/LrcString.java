@@ -4,7 +4,9 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 
-public class LrcString {
+import java.io.Serializable;
+
+public class LrcString implements Serializable{
 
 
     /**
@@ -14,6 +16,7 @@ public class LrcString {
      **/
 
     private String text;
+
     private StaticLayout staticLayout;
     private float offset;
 
