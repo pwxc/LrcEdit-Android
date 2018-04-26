@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_save"
         android:title="save"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/timer"
+        android:icon="@drawable/ic_timer"
+        android:title="timer"
+        app:showAsAction="always"/>
 </menu>

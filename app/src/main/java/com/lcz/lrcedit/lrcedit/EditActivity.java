@@ -66,6 +66,11 @@ public class EditActivity extends AppCompatActivity {
             case R.id.save:
                 mySave();
                 break;
+            case R.id.timer:
+                if(!lrcEdit.getLrcStrings().isEmpty()){
+
+                }
+                break;
             default:
         }
         return true;
