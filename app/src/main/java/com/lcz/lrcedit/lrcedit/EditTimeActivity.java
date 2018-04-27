@@ -7,12 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.lcz.lrcedit.lrcmoudle.LrcEdit;
+import com.lcz.lrcedit.lrcmoudle.LrcTimeEdit;
 
 import java.util.ArrayList;
 
 public class EditTimeActivity extends AppCompatActivity {
 
-    private LrcEdit lrcEdit;
+    private LrcTimeEdit lrcEdit;
     private ArrayList<String> lrcEdits;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -22,21 +23,18 @@ public class EditTimeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intentGet = getIntent();
         lrcEdits = (ArrayList<String>) intentGet.getStringArrayListExtra("key");
-        lrcEdit = (LrcEdit) findViewById(R.id.lrctimeedit);
-
-
+        lrcEdit = (LrcTimeEdit) findViewById(R.id.lrctimeedit);
+        lrcEdit.initStrings(lrcEdits);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (String string:lrcEdits){
-            lrcEdit.addLrcString(string);
-        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbartime, menu);
         return true;
     }
+
 }

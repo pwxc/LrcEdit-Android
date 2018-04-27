@@ -15,7 +15,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
-    <com.lcz.lrcedit.lrcmoudle.LrcEdit
+    <com.lcz.lrcedit.lrcmoudle.LrcTimeEdit
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

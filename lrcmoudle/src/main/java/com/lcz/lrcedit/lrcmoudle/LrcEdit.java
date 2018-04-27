@@ -59,10 +59,7 @@ public class LrcEdit extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(endLine>=0){
-            textDraw(lrcStrings,canvas,textPaint);
-        }
-
+        textDraw(lrcStrings,canvas,textPaint);
     }
 
 
@@ -74,26 +71,30 @@ public class LrcEdit extends View {
         offsetE = offset;
         float totleOffset = 0;
         int stringLen = strings.size();
-        for(LrcString temp:strings){
-            temp.init(paint,getWidth());
-        }
-        for(int i=0;i<stringLen;i++){
-            if (i > 0) {
-                totleOffset += strings.get(i - 1).getHeight() + offset;
+        if(stringLen == 0){
+            StaticLayout staticLayout = new StaticLayout("请输入歌词", textPaint, (int)getWidth(),
+                    Layout.Alignment.ALIGN_CENTER, 1f, 0f, false);
+            drawText(canvas,staticLayout,getHeight()/2);
+            scrollTo(0, 0);
+        }else {
+            for(LrcString temp:strings){
+                temp.init(paint,getWidth());
             }
-            if(i==stringLen-1) {
-                lrcOffset = canvas.getHeight() - totleOffset - 2*offset -strings.get(stringLen-1).getHeight();
-                strings.get(i).setOffset(lrcOffset);
+            for(int i=0;i<stringLen;i++){
+                if (i > 0) {
+                    totleOffset += strings.get(i - 1).getHeight() + offset;
+                }
+                if(i==stringLen-1) {
+                    lrcOffset = canvas.getHeight() - totleOffset - 2*offset -strings.get(stringLen-1).getHeight();
+                    strings.get(i).setOffset(lrcOffset);
+                }
+                drawText(canvas, strings.get(i).getStaticLayout(), totleOffset);
             }
-            drawText(canvas, strings.get(i).getStaticLayout(), totleOffset);
+            if(isNewAdd){
+                scrollTo(0, -(int)(strings.get(stringLen-1).getOffset()));
+                isNewAdd = false;
+            }
         }
-        if(isNewAdd){
-            scrollTo(0, -(int)(strings.get(stringLen-1).getOffset()));
-            isNewAdd = false;
-        }
-
-
-
     }
 
     private void drawText(Canvas canvas, StaticLayout staticLayout, float y) {

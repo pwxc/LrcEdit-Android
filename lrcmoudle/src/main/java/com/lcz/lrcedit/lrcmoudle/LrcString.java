@@ -20,6 +20,16 @@ public class LrcString implements Serializable{
     private StaticLayout staticLayout;
     private float offset;
 
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    private long startTime;
+
     public float getOffset() {
         return offset;
     }
@@ -39,7 +49,7 @@ public class LrcString implements Serializable{
         staticLayout = new StaticLayout(text, paint, width, Layout.Alignment.ALIGN_CENTER, 1f, 0f, false);
     }
 
-    int getHeight() {
+    float getHeight() {
         if (staticLayout == null) {
             return 0;
         }
