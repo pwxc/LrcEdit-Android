@@ -4,9 +4,8 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 
-import java.io.Serializable;
 
-public class LrcString implements Serializable{
+public class LrcString{
 
 
     /**
@@ -16,7 +15,7 @@ public class LrcString implements Serializable{
      **/
 
     private String text;
-
+    private long startTime = -1;
     private StaticLayout staticLayout;
     private float offset;
 
@@ -27,9 +26,7 @@ public class LrcString implements Serializable{
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
-
-    private long startTime;
-
+    
     public float getOffset() {
         return offset;
     }
@@ -59,4 +56,16 @@ public class LrcString implements Serializable{
     StaticLayout getStaticLayout() {
         return staticLayout;
     }
+
+    public String getSaveString(){
+        if (startTime == -1){
+            return null;
+        }else {
+            int min = (int)startTime / 60000;
+            float sec = (float)(startTime%60000) / 1000;
+            String saveString = String.format("[%02d:%05.2f]%s",min,sec,text);
+            return saveString;
+        }
+    }
+
 }

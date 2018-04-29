@@ -14,6 +14,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 
 public class LrcTimeEdit extends View {
@@ -21,11 +22,15 @@ public class LrcTimeEdit extends View {
     private int editType;
     private final int NORMAL = 0;
     private final int TIMEADD = 1;
+
     private TextPaint textPaint;
+    private Paint linePaint;
+
     private int currentLine = 0;
     private long startTime = 0;
     private List<LrcString> lrcStrings;
     private float offset = 20;
+
     private boolean isNewAdd = false;
 
     private GestureDetector gestureDetector;
@@ -43,18 +48,40 @@ public class LrcTimeEdit extends View {
 
     private void init(){
         lrcStrings = new ArrayList<>();
+
         textPaint = new TextPaint();
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(50);
         textPaint.setTextAlign(Paint.Align.LEFT);
+
+        linePaint = new Paint();
+        linePaint.setARGB(0x80,0x8A,0x8A,0x8A);
+        linePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        linePaint.setStrokeWidth(5);
+
         gestureDetector = new GestureDetector(getContext(), simpleOnGestureListener);
         gestureDetector.setIsLongpressEnabled(false);
     }
 
-    private void timeAddInit(){
-        startTime=System.currentTimeMillis();
+    //初始化时间添加函数
+    public void timeAddInit(){
         editType = TIMEADD;
+        currentLine = 0;
+        startTime=System.currentTimeMillis();
+        moveCenterLine(0);
     }
+
+    private void moveCenterLine(int lineNumber){
+        if(lineNumber>=0 && lineNumber<lrcStrings.size()){
+            scrollTo(0,(int)lrcStrings.get(lineNumber).getOffset() - getHeight()/2);
+            if(editType == TIMEADD){
+                lrcStrings.get(lineNumber).setStartTime(System.currentTimeMillis() - startTime);
+                Log.e("time",lrcStrings.get(lineNumber).getStartTime()+"");
+            }
+
+        }
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -62,8 +89,12 @@ public class LrcTimeEdit extends View {
         if(!lrcStrings.isEmpty()){
             textDraw(lrcStrings,canvas,textPaint);
             if(isNewAdd){
-                scrollTo(0,(int)lrcStrings.get(0).getOffset() - getHeight()/2);
+                moveCenterLine(0);
                 isNewAdd = false;
+            }
+            if(editType == TIMEADD){
+                moveCenterLine(currentLine);
+                canvas.drawLine(0,getHeight()/2+getScrollY(),getWidth(),getHeight()/2+getScrollY(),linePaint);
             }
         }
 
@@ -83,7 +114,7 @@ public class LrcTimeEdit extends View {
             }
             strings.get(i).init(paint,getWidth());
             if(i == 0){
-                strings.get(i).setOffset(offset);
+                strings.get(i).setOffset(-offset/2);
             }else {
                 strings.get(i).setOffset(strings.get(i-1).getOffset()+strings.get(i-1).getHeight()+offset);
             }
@@ -99,18 +130,20 @@ public class LrcTimeEdit extends View {
         canvas.restore();
     }
 
+    //初始化字符串数据
     public void initStrings(ArrayList<String> lrcEdits){
         for (String string:lrcEdits){
             addLrcString(string);
         }
         isNewAdd = true;
-
+        editType = NORMAL;
     }
 
     public void addLrcString(String string){
         LrcString lrcString= new LrcString(string);
         lrcStrings.add(lrcString);
     }
+
 
     public boolean onTouchEvent(MotionEvent motionEvent) {
         return gestureDetector.onTouchEvent(motionEvent);
@@ -123,20 +156,32 @@ public class LrcTimeEdit extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            int y = (int)distanceY;
-            if(!lrcStrings.isEmpty()){
-                scrollBy(0,y);
-                //这条式子真是反人类，重构的时候优先改善
-                float top = lrcStrings.get(0).getOffset() - getHeight()/2;
-                float bottom = lrcStrings.get(lrcStrings.size()-1).getOffset() - getHeight()/2;
-                if(getScrollY()<top){
-                    scrollTo(0, (int)top);
-                }
-                if(getScrollY()>bottom){
-                    scrollTo(0, (int)(bottom));
+            if(editType == NORMAL){
+                int y = (int)distanceY;
+                if(!lrcStrings.isEmpty()){
+                    scrollBy(0,y);
+                    //这条式子真是反人类，重构的时候优先改善
+                    float top = lrcStrings.get(0).getOffset() - getHeight()/2;
+                    float bottom = lrcStrings.get(lrcStrings.size()-1).getOffset() - getHeight()/2;
+                    if(getScrollY()<top){
+                        scrollTo(0, (int)top);
+                    }
+                    if(getScrollY()>bottom){
+                        scrollTo(0, (int)(bottom));
+                    }
                 }
             }
+            return true;
+        }
 
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            if(editType == TIMEADD){
+                if(currentLine<lrcStrings.size()-1){
+                    currentLine++;
+                    invalidate();
+                }
+            }
             return true;
         }
 
@@ -150,5 +195,9 @@ public class LrcTimeEdit extends View {
             return super.onSingleTapConfirmed(e);
         }
     };
+
+    public List<LrcString> getLrcStrings() {
+        return lrcStrings;
+    }
 
 }
