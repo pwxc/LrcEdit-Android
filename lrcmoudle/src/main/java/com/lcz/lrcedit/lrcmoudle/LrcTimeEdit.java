@@ -94,7 +94,7 @@ public class LrcTimeEdit extends View {
             }
             if(editType == TIMEADD){
                 moveCenterLine(currentLine);
-                canvas.drawLine(0,getHeight()/2+getScrollY(),getWidth(),getHeight()/2+getScrollY(),linePaint);
+                canvas.drawLine(0,getHeight()/2+getScrollY()+offset/2,getWidth(),getHeight()/2+getScrollY()+offset/2,linePaint);
             }
         }
 
