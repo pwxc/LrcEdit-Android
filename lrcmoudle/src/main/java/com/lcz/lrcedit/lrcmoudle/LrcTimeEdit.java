@@ -69,6 +69,7 @@ public class LrcTimeEdit extends View {
         currentLine = 0;
         startTime=System.currentTimeMillis();
         moveCenterLine(0);
+        invalidate();
     }
 
     private void moveCenterLine(int lineNumber){
