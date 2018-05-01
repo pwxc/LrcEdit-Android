@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,6 +182,9 @@ public class LrcTimeEdit extends View {
                 if(currentLine<lrcStrings.size()-1){
                     currentLine++;
                     invalidate();
+                }
+                if(currentLine == lrcStrings.size()-1){
+                    Toast.makeText(getContext(),"lrc编辑完成，请保存",Toast.LENGTH_SHORT).show();
                 }
             }
             return true;
