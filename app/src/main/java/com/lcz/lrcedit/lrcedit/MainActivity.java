@@ -11,8 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button addTxt;
     private Button addLrc;
+    private Button helpButton;
+    private PopupWindow popupWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         addTxt = (Button) findViewById(R.id.MainActivity_addTxt);
         addLrc = (Button) findViewById(R.id.MainActivity_addLrc);
+        helpButton = (Button) findViewById(R.id.MainActivity_getHelp);
         addTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         addLrc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +66,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.popupwindow_help, null);
+                popupWindow = new PopupWindow(contentView,
+                        WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+                popupWindow.setContentView(contentView);
+                View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
+                popupWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+            }
+        });
     }
+
     private boolean hasTxtFile(){
         File file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit");
         File[] files = file.listFiles();

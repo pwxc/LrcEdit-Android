@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LrcEdit</string>
+    <string name="help">\ntxt编辑界面：\n双击可以删除最后一行\n\nlrc编辑界面：\n点击开始按钮后\n单击即可进入下一行\n时间自动记录\n编辑过程中出现问题\n可以重新按开始按钮重置进度\n</string>
 </resources>

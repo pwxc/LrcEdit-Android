@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 
 public class LrcTimeEdit extends View {
@@ -109,8 +108,10 @@ public class LrcTimeEdit extends View {
         float bottom = fontMetrics.bottom;
         offset = bottom - top;
         for(int i=0;i<strings.size();i++){
-            if(i==currentLine){
+            if(i == currentLine){
                 paint.setColor(Color.RED);
+            }else if(i > currentLine){
+                paint.setColor(Color.GRAY);
             }else {
                 paint.setColor(Color.BLUE);
             }
