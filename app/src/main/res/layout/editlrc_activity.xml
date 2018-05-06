@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBar_Time"
+        android:id="@+id/editLrc_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -15,11 +15,11 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
-    <com.lcz.lrcedit.lrcmoudle.LrcTimeEdit
+    <com.lcz.lrcedit.lrcmoudle.LrcEditor
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/lrctimeedit"/>
+        android:id="@+id/editLrc_lrcEditor"/>
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"

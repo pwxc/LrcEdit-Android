@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/MainActivity_toolBar"
+        android:id="@+id/main_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -27,7 +27,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/MainActivity_addTxt"
+            android:id="@+id/main_button_addTxt"
             android:text="编辑txt文件" />
     </LinearLayout>
     <LinearLayout
@@ -38,7 +38,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/MainActivity_addLrc"
+            android:id="@+id/main_button_addLrc"
             android:text="编辑lrc文件" />
     </LinearLayout>
     <LinearLayout
@@ -49,7 +49,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/MainActivity_getHelp"
+            android:id="@+id/main_button_getHelp"
             android:text="使用帮助说明" />
     </LinearLayout>
     <LinearLayout

@@ -19,25 +19,6 @@ public class LrcString{
     private StaticLayout staticLayout;
     private float offset;
 
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-    
-    public float getOffset() {
-        return offset;
-    }
-
-    public void setOffset(float offset) {
-        this.offset = offset;
-    }
-
-    public String getText() {
-        return text;
-    }
     public LrcString(String string){
         this.text = string;
     }
@@ -53,10 +34,6 @@ public class LrcString{
         return staticLayout.getHeight();
     }
 
-    StaticLayout getStaticLayout() {
-        return staticLayout;
-    }
-
     public String getSaveString(){
         if (startTime == -1){
             return null;
@@ -68,4 +45,27 @@ public class LrcString{
         }
     }
 
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public float getOffset() {
+        return offset;
+    }
+
+    public void setOffset(float offset) {
+        this.offset = offset;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public StaticLayout getStaticLayout() {
+        return staticLayout;
+    }
 }

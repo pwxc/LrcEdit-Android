@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBar"
+        android:id="@+id/editTxt_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -20,8 +20,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/ll">
-        <com.lcz.lrcedit.lrcmoudle.LrcEdit
-            android:id="@+id/lrc_edit"
+        <com.lcz.lrcedit.lrcmoudle.TxtEditor
+            android:id="@+id/editTxt_txtEditor"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -30,12 +30,12 @@
         android:layout_height="wrap_content">
         <EditText
             android:layout_weight="4"
-            android:id="@+id/editText"
+            android:id="@+id/editTxt_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
              />
         <Button
-            android:id="@+id/addButton"
+            android:id="@+id/editTxt_button_add"
             android:layout_weight="1"
             android:text="添加"
             android:layout_width="0dp"

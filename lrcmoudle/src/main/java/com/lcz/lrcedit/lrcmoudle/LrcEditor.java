@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LrcTimeEdit extends View {
+public class LrcEditor extends View {
 
     private int editType;
     private final int NORMAL = 0;
@@ -35,14 +35,14 @@ public class LrcTimeEdit extends View {
 
     private GestureDetector gestureDetector;
 
-    public LrcTimeEdit(Context context, AttributeSet attributeSet, int defStyleAttr) {
+    public LrcEditor(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
         init();
     }
-    public LrcTimeEdit(Context context, AttributeSet attributeSet) {
+    public LrcEditor(Context context, AttributeSet attributeSet) {
         this(context, attributeSet,0);
     }
-    public LrcTimeEdit(Context context) {
+    public LrcEditor(Context context) {
         this(context,null);
     }
 

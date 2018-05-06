@@ -20,18 +20,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.lcz.lrcedit.lrcmoudle.LrcEdit;
+import com.lcz.lrcedit.lrcmoudle.TxtEditor;
 import com.lcz.lrcedit.lrcmoudle.LrcString;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditActivity extends AppCompatActivity {
+public class EditTxtActivity extends AppCompatActivity {
 
-    private LrcEdit lrcEdit;
+    private TxtEditor txtEditor;
     private Button addButton;
     private EditText editText;
     private String fileName = "test";
@@ -39,18 +38,18 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar);
+        setContentView(R.layout.edittxt_activity);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.editTxt_toolBar);
         setSupportActionBar(toolbar);
-        lrcEdit = (LrcEdit)findViewById(R.id.lrc_edit);
-        addButton = (Button)findViewById(R.id.addButton);
-        editText = (EditText) findViewById(R.id.editText);
+        txtEditor = (TxtEditor)findViewById(R.id.editTxt_txtEditor);
+        addButton = (Button)findViewById(R.id.editTxt_button_add);
+        editText = (EditText) findViewById(R.id.editTxt_editText);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String string = editText.getText().toString();
                 if(!string.isEmpty()){
-                    lrcEdit.addLrcString(string);
+                    txtEditor.addLrcString(string);
                     editText.getText().clear();
                 }
             }
@@ -70,10 +69,10 @@ public class EditActivity extends AppCompatActivity {
                 mySave();
                 break;
             case R.id.timer:
-                if(!lrcEdit.getLrcStrings().isEmpty()){
+                if(!txtEditor.getLrcStrings().isEmpty()){
                     ArrayList<String> tempArraylist = new ArrayList<>();
-                    Intent intent = new Intent(EditActivity.this, EditTimeActivity.class);
-                    for(LrcString lrcString:lrcEdit.getLrcStrings()){
+                    Intent intent = new Intent(EditTxtActivity.this, EditLrcActivity.class);
+                    for(LrcString lrcString: txtEditor.getLrcStrings()){
                         tempArraylist.add(lrcString.getText());
                     }
                     intent.putStringArrayListExtra("key",tempArraylist);
@@ -103,12 +102,12 @@ public class EditActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         fileName = titleEditText.getText().toString();
                         dialog.dismiss();
-                        if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        if(ContextCompat.checkSelfPermission(EditTxtActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                                 PackageManager.PERMISSION_GRANTED){
-                            ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        }else if(ContextCompat.checkSelfPermission(EditActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                            ActivityCompat.requestPermissions(EditTxtActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }else if(ContextCompat.checkSelfPermission(EditTxtActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                                 PackageManager.PERMISSION_GRANTED){
-                            ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                            ActivityCompat.requestPermissions(EditTxtActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                         }
                         else {
                             saveFile();
@@ -125,7 +124,7 @@ public class EditActivity extends AppCompatActivity {
     //保存文件函数
     private void saveFile(){
         String fileType = ".txt";
-        List<LrcString> lrcList = lrcEdit.getLrcStrings();
+        List<LrcString> lrcList = txtEditor.getLrcStrings();
         try{
 
             File file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit");

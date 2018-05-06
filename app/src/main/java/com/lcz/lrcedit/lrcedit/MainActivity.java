@@ -19,10 +19,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,16 +31,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.MainActivity_toolBar);
+        setContentView(R.layout.main_activity);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.main_toolBar);
         setSupportActionBar(toolbar);
-        addTxt = (Button) findViewById(R.id.MainActivity_addTxt);
-        addLrc = (Button) findViewById(R.id.MainActivity_addLrc);
-        helpButton = (Button) findViewById(R.id.MainActivity_getHelp);
+        addTxt = (Button) findViewById(R.id.main_button_addTxt);
+        addLrc = (Button) findViewById(R.id.main_button_addLrc);
+        helpButton = (Button) findViewById(R.id.main_button_getHelp);
         addTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,EditActivity.class);
+                Intent intent = new Intent(MainActivity.this,EditTxtActivity.class);
                 startActivity(intent);
             }
         });
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     if(!hasTxtFile()){
                         Toast.makeText(MainActivity.this,"请先编辑TXT文件",Toast.LENGTH_SHORT).show();
                     }else {
-                        Intent intent = new Intent(MainActivity.this,ListActivity.class);
+                        Intent intent = new Intent(MainActivity.this,TxtListActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -69,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.popupwindow_help, null);
+                View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.main_popupwindow, null);
                 popupWindow = new PopupWindow(contentView,
                         WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
                 popupWindow.setContentView(contentView);
-                View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
+                View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.main_activity, null);
                 popupWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
             }
         });

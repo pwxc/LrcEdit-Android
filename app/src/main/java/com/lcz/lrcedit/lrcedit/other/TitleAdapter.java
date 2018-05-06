@@ -25,7 +25,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
         TextView titleTextView;
          public ViewHolder(View view){
              super(view);
-             titleTextView = (TextView) view.findViewById(R.id.title_TextView);
+             titleTextView = (TextView) view.findViewById(R.id.txtList_recycle_item_textView);
          }
     }
 
@@ -35,7 +35,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listadapter,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.txtlist_recycle_item,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

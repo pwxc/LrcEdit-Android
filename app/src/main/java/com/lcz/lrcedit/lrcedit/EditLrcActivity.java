@@ -19,31 +19,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.lcz.lrcedit.lrcmoudle.LrcEdit;
 import com.lcz.lrcedit.lrcmoudle.LrcString;
-import com.lcz.lrcedit.lrcmoudle.LrcTimeEdit;
+import com.lcz.lrcedit.lrcmoudle.LrcEditor;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditTimeActivity extends AppCompatActivity {
+public class EditLrcActivity extends AppCompatActivity {
 
-    private LrcTimeEdit lrcEdit;
+    private LrcEditor lrcEdit;
     private ArrayList<String> lrcEdits;
     private ImageButton imageButton;
     private String fileName = "test";
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edittime);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar_Time);
+        setContentView(R.layout.editlrc_activity);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.editLrc_toolbar);
         imageButton = (ImageButton)findViewById(R.id.imageButton);
         setSupportActionBar(toolbar);
         Intent intentGet = getIntent();
         lrcEdits = (ArrayList<String>) intentGet.getStringArrayListExtra("key");
-        lrcEdit = (LrcTimeEdit) findViewById(R.id.lrctimeedit);
+        lrcEdit = (LrcEditor) findViewById(R.id.editLrc_lrcEditor);
         lrcEdit.initStrings(lrcEdits);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,12 +91,12 @@ public class EditTimeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         fileName = titleEditText.getText().toString();
                         dialog.dismiss();
-                        if(ContextCompat.checkSelfPermission(EditTimeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        if(ContextCompat.checkSelfPermission(EditLrcActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                                 PackageManager.PERMISSION_GRANTED){
-                            ActivityCompat.requestPermissions(EditTimeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        }else if(ContextCompat.checkSelfPermission(EditTimeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                            ActivityCompat.requestPermissions(EditLrcActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }else if(ContextCompat.checkSelfPermission(EditLrcActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                                 PackageManager.PERMISSION_GRANTED){
-                            ActivityCompat.requestPermissions(EditTimeActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                            ActivityCompat.requestPermissions(EditLrcActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                         }
                         else {
                             saveFile();

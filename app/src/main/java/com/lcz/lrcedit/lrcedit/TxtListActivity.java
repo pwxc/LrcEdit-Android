@@ -8,21 +8,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.lcz.lrcedit.lrcedit.other.RecycleViewListener;
 import com.lcz.lrcedit.lrcedit.other.TitleAdapter;
-import com.lcz.lrcedit.lrcmoudle.LrcString;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class TxtListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TitleAdapter adapter;
@@ -33,10 +30,10 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.ListActivity_toolBar);
+        setContentView(R.layout.txtlist_activity);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.txtList_toolBar);
         setSupportActionBar(toolbar);
-        recyclerView = (RecyclerView)findViewById(R.id.ListActivity_RecyclerView);
+        recyclerView = (RecyclerView)findViewById(R.id.txtList_recyclerView);
         init();
     }
 
@@ -68,7 +65,7 @@ public class ListActivity extends AppCompatActivity {
                         else
                             break;
                     }
-                    Intent intent = new Intent(ListActivity.this, EditTimeActivity.class);
+                    Intent intent = new Intent(TxtListActivity.this, EditLrcActivity.class);
                     intent.putStringArrayListExtra("key",list);
                     startActivity(intent);
                 }catch (Exception e){

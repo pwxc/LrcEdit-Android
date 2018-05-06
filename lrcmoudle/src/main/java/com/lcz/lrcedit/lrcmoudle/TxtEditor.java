@@ -1,12 +1,8 @@
 package com.lcz.lrcedit.lrcmoudle;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -19,7 +15,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LrcEdit extends View {
+public class TxtEditor extends View {
 
 
     private boolean isNewAdd = false;
@@ -33,19 +29,22 @@ public class LrcEdit extends View {
     private float offsetE;
     private GestureDetector gestureDetector;
 
-    public LrcEdit(Context context, AttributeSet attributeSet, int defStyleAttr) {
+    public TxtEditor(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
-    }
-    public LrcEdit(Context context, AttributeSet attributeSet) {
-        super(context, attributeSet);
         init();
     }
-    public LrcEdit(Context context) {
-        super(context);
+    public TxtEditor(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet,0);
+
     }
+    public TxtEditor(Context context) {
+        this(context,null);
+    }
+
     public List<LrcString> getLrcStrings() {
         return lrcStrings;
     }
+
     private void init(){
         lrcStrings = new ArrayList<>();
         textPaint = new TextPaint();
@@ -103,12 +102,11 @@ public class LrcEdit extends View {
         staticLayout.draw(canvas);
         canvas.restore();
     }
+
     //添加歌词函数
     public void addLrcString(String string){
         LrcString lrcString= new LrcString(string);
         lrcStrings.add(lrcString);
-//        endLine = lrcStrings.size();
-//        lrcStrings.get(endLine-1).init(textPaint, getWidth());
         isNewAdd = true;
         invalidate();
     }
@@ -138,9 +136,6 @@ public class LrcEdit extends View {
             case MeasureSpec.UNSPECIFIED:
                 break;
         }
-        Log.e(TAG, "onMeasure--widthSize-->" + widthSize);
-        Log.e(TAG, "onMeasure--heightMode-->" + heightMode);
-        Log.e(TAG, "onMeasure--heightSize-->" + heightSize);
     }
 
     @Override
