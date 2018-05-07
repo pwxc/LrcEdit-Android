@@ -151,6 +151,8 @@ public class LrcEditor extends View {
     public boolean onTouchEvent(MotionEvent motionEvent) {
         return gestureDetector.onTouchEvent(motionEvent);
     }
+
+    //这个listener应当在适当时候移出View，写在Activity
     private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
@@ -204,6 +206,10 @@ public class LrcEditor extends View {
 
     public List<LrcString> getLrcStrings() {
         return lrcStrings;
+    }
+
+    public boolean isFinish(){
+        return currentLine == lrcStrings.size()-1;
     }
 
 }

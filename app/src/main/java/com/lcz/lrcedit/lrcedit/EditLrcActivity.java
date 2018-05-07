@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
+import com.lcz.lrcedit.lrcedit.other.MyToast;
 import com.lcz.lrcedit.lrcmoudle.LrcString;
 import com.lcz.lrcedit.lrcmoudle.LrcEditor;
 
@@ -29,8 +29,8 @@ import java.util.List;
 
 public class EditLrcActivity extends AppCompatActivity {
 
-    private LrcEditor lrcEdit;
-    private ArrayList<String> lrcEdits;
+    private LrcEditor lrcEditor;
+    private ArrayList<String> lrcStrings;
     private ImageButton imageButton;
     private String fileName = "test";
     @Override
@@ -41,13 +41,13 @@ public class EditLrcActivity extends AppCompatActivity {
         imageButton = (ImageButton)findViewById(R.id.imageButton);
         setSupportActionBar(toolbar);
         Intent intentGet = getIntent();
-        lrcEdits = (ArrayList<String>) intentGet.getStringArrayListExtra("key");
-        lrcEdit = (LrcEditor) findViewById(R.id.editLrc_lrcEditor);
-        lrcEdit.initStrings(lrcEdits);
+        lrcStrings = (ArrayList<String>) intentGet.getStringArrayListExtra("key");
+        lrcEditor = (LrcEditor) findViewById(R.id.editLrc_lrcEditor);
+        lrcEditor.initStrings(lrcStrings);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lrcEdit.timeAddInit();
+                lrcEditor.timeAddInit();
             }
         });
     }
@@ -61,7 +61,12 @@ public class EditLrcActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save:
-                mySave();
+                if(lrcEditor.isFinish()){
+                    mySave();
+                }else {
+                    MyToast.showToast(this,"还有歌词未添加时间");
+                }
+
                 break;
             default:
         }
@@ -109,7 +114,7 @@ public class EditLrcActivity extends AppCompatActivity {
 
     private void saveFile(){
         String fileType = ".lrc";
-        List<LrcString> lrcList = lrcEdit.getLrcStrings();
+        List<LrcString> lrcList = lrcEditor.getLrcStrings();
         try{
 
             File file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit");
@@ -126,7 +131,7 @@ public class EditLrcActivity extends AppCompatActivity {
             for(LrcString s:lrcList){
                 outStream.write((s.getSaveString()+'\n').getBytes());
             }
-            Toast.makeText(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType,Toast.LENGTH_SHORT).show();
+            MyToast.showToast(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType);
             outStream.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -141,7 +146,7 @@ public class EditLrcActivity extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     saveFile();
                 }else {
-                    Toast.makeText(this, "You denied the permission",Toast.LENGTH_SHORT).show();
+                    MyToast.showToast(this,"You denied the permission");
                 }
                 break;
             default:

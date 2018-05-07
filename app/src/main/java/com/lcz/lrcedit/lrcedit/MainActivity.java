@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.lcz.lrcedit.lrcedit.other.MyToast;
+
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 }else {
-                    if(!hasTxtFile()){
-                        Toast.makeText(MainActivity.this,"请先编辑TXT文件",Toast.LENGTH_SHORT).show();
+                    if(hasTxtFile()){
+                        MyToast.showToast(MainActivity.this,"请先编辑TXT文件");
                     }else {
                         Intent intent = new Intent(MainActivity.this,TxtListActivity.class);
                         startActivity(intent);
@@ -94,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case 1:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this, "权限已获取",Toast.LENGTH_SHORT).show();
+                    MyToast.showToast(this,"权限已获取");
                 }else {
-                    Toast.makeText(this, "You denied the permission",Toast.LENGTH_SHORT).show();
+                    MyToast.showToast(this,"You denied the permission");
                 }
                 break;
             default:

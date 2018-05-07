@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.lcz.lrcedit.lrcedit.other.MyToast;
 import com.lcz.lrcedit.lrcmoudle.TxtEditor;
 import com.lcz.lrcedit.lrcmoudle.LrcString;
 
@@ -141,7 +142,7 @@ public class EditTxtActivity extends AppCompatActivity {
             for(LrcString s:lrcList){
                 outStream.write((s.getText()+'\n').getBytes());
             }
-            Toast.makeText(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType,Toast.LENGTH_SHORT).show();
+            MyToast.showToast(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType);
             outStream.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -156,7 +157,7 @@ public class EditTxtActivity extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     saveFile();
                 }else {
-                    Toast.makeText(this, "You denied the permission",Toast.LENGTH_SHORT).show();
+                    MyToast.showToast(this,"You denied the permission");
                 }
                 break;
             default:
