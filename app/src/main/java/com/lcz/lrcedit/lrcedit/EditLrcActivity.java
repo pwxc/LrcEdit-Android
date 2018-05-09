@@ -32,7 +32,7 @@ public class EditLrcActivity extends AppCompatActivity {
     private LrcEditor lrcEditor;
     private ArrayList<String> lrcStrings;
     private ImageButton imageButton;
-    private String fileName = "test";
+    private String fileName = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class EditLrcActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.save:
+            case R.id.editLrc_toolBar_save:
                 if(lrcEditor.isFinish()){
                     mySave();
                 }else {
@@ -74,7 +74,7 @@ public class EditLrcActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbartime, menu);
+        getMenuInflater().inflate(R.menu.editlrc_toolbar, menu);
         return true;
     }
 

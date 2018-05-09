@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 import com.lcz.lrcedit.lrcedit.other.MyToast;
@@ -34,7 +33,7 @@ public class EditTxtActivity extends AppCompatActivity {
     private TxtEditor txtEditor;
     private Button addButton;
     private EditText editText;
-    private String fileName = "test";
+    private String fileName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +58,20 @@ public class EditTxtActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.edittxt_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.save:
+            case R.id.editTxt_toolBar_save:
                 mySave();
                 break;
-            case R.id.timer:
+            case R.id.editTxt_toolBar_addTime:
+                if(fileName == null){
+                    MyToast.showToast(this,"请先保存");
+                }
                 if(!txtEditor.getLrcStrings().isEmpty()){
                     ArrayList<String> tempArraylist = new ArrayList<>();
                     Intent intent = new Intent(EditTxtActivity.this, EditLrcActivity.class);

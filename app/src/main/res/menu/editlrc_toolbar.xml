@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/save"
+        android:id="@+id/editLrc_toolBar_save"
         android:icon="@drawable/ic_save"
         android:title="save"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/timer"
-        android:icon="@drawable/ic_timer"
-        android:title="timer"
+        android:id="@+id/editLrc_toolBar_preview"
+        android:icon="@drawable/ic_lrc"
+        android:title="save"
         app:showAsAction="always"/>
+
 </menu>
