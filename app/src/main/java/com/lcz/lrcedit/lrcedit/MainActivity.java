@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 }else {
-                    if(hasTxtFile()){
+                    if(!hasTxtFile()){
                         MyToast.showToast(MainActivity.this,"请先编辑TXT文件");
                     }else {
                         Intent intent = new Intent(MainActivity.this,TxtListActivity.class);

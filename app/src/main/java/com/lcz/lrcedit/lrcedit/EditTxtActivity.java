@@ -69,7 +69,7 @@ public class EditTxtActivity extends AppCompatActivity {
                 mySave();
                 break;
             case R.id.editTxt_toolBar_addTime:
-                if(fileName == null){
+                if(!txtEditor.isSaved()){
                     MyToast.showToast(this,"请先保存");
                 }
                 if(!txtEditor.getLrcStrings().isEmpty()){
@@ -145,6 +145,7 @@ public class EditTxtActivity extends AppCompatActivity {
                 outStream.write((s.getText()+'\n').getBytes());
             }
             MyToast.showToast(this,"已保存为"+Environment.getExternalStorageDirectory()+"/lrcEdit/"+fileName+fileType);
+            txtEditor.setSaved(true);
             outStream.close();
         }catch (Exception e){
             e.printStackTrace();

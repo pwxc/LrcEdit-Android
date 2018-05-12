@@ -66,7 +66,9 @@ public class EditLrcActivity extends AppCompatActivity {
                 }else {
                     MyToast.showToast(this,"还有歌词未添加时间");
                 }
-
+                break;
+            case R.id.editLrc_toolBar_preview:
+                MyToast.showToast(this,"预览功能即将上线");
                 break;
             default:
         }

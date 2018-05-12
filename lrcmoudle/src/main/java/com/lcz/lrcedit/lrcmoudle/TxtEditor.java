@@ -21,13 +21,13 @@ public class TxtEditor extends View {
     private boolean isNewAdd = false;
     private List<LrcString> lrcStrings;
     private TextPaint textPaint;
-    private String TAG = "view";
     private int lastY;
     private int viewHeight;
     private float lrcOffset;
     private int endLine=0;
     private float offsetE;
     private GestureDetector gestureDetector;
+    private boolean isSaved = false;
 
     public TxtEditor(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
@@ -108,6 +108,7 @@ public class TxtEditor extends View {
         LrcString lrcString= new LrcString(string);
         lrcStrings.add(lrcString);
         isNewAdd = true;
+        isSaved = false;
         invalidate();
     }
 
@@ -115,6 +116,7 @@ public class TxtEditor extends View {
     public void removeLrcString(){
         lrcStrings.remove(lrcStrings.size()-1);
         isNewAdd = true;
+        isSaved = false;
         invalidate();
     }
 
@@ -127,7 +129,6 @@ public class TxtEditor extends View {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         viewHeight = heightSize;
-        Log.e(TAG, "onMeasure--widthMode-->" + widthMode);
         switch (widthMode) {
             case MeasureSpec.EXACTLY:
                 break;
@@ -189,4 +190,12 @@ public class TxtEditor extends View {
             return super.onSingleTapConfirmed(e);
         }
     };
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
 }

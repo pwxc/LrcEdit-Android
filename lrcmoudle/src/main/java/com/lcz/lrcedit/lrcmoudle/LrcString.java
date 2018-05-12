@@ -68,4 +68,5 @@ public class LrcString{
     public StaticLayout getStaticLayout() {
         return staticLayout;
     }
+
 }
