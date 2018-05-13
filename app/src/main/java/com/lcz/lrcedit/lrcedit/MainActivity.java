@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean hasTxtFile(){
         File file = new File(Environment.getExternalStorageDirectory()+"/lrcEdit");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
         File[] files = file.listFiles();
         for(File tempFile:files){
             String filename = tempFile.getName();

@@ -70,7 +70,7 @@ public class EditTxtActivity extends AppCompatActivity {
                 break;
             case R.id.editTxt_toolBar_addTime:
                 if(!txtEditor.isSaved()){
-                    MyToast.showToast(this,"请先保存");
+//                    MyToast.showToast(this,"请先保存");
                 }
                 if(!txtEditor.getLrcStrings().isEmpty()){
                     ArrayList<String> tempArraylist = new ArrayList<>();

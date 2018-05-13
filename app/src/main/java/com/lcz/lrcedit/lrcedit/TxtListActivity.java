@@ -74,11 +74,8 @@ public class TxtListActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
-
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
-
-
     }
 
 }
