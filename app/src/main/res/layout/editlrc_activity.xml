@@ -15,6 +15,14 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
+    <Chronometer
+        android:id="@+id/editLrc_chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:format="%s"
+        android:textColor="#00FF00"
+        android:textSize="10sp" />
     <com.lcz.lrcedit.lrcmoudle.LrcEditor
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -33,12 +35,14 @@ public class EditLrcActivity extends AppCompatActivity {
     private ArrayList<String> lrcStrings;
     private ImageButton imageButton;
     private String fileName = null;
+    private Chronometer chronometer;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editlrc_activity);
         Toolbar toolbar = (Toolbar)findViewById(R.id.editLrc_toolbar);
         imageButton = (ImageButton)findViewById(R.id.imageButton);
+        chronometer = (Chronometer)findViewById(R.id.editLrc_chronometer);
         setSupportActionBar(toolbar);
         Intent intentGet = getIntent();
         lrcStrings = (ArrayList<String>) intentGet.getStringArrayListExtra("key");
@@ -48,6 +52,8 @@ public class EditLrcActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lrcEditor.timeAddInit();
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
             }
         });
     }
