@@ -5,7 +5,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 
 
-public class LrcString{
+public class LrcString {
 
 
     /**
@@ -19,7 +19,7 @@ public class LrcString{
     private StaticLayout staticLayout;
     private float offset;
 
-    public LrcString(String string){
+    public LrcString(String string) {
         this.text = string;
     }
 
@@ -34,13 +34,13 @@ public class LrcString{
         return staticLayout.getHeight();
     }
 
-    public String getSaveString(){
-        if (startTime == -1){
+    public String getSaveString() {
+        if (startTime == -1) {
             return null;
-        }else {
-            int min = (int)startTime / 60000;
-            float sec = (float)(startTime%60000) / 1000;
-            String saveString = String.format("[%02d:%05.2f]%s",min,sec,text);
+        } else {
+            int min = (int) startTime / 60000;
+            float sec = (float) (startTime % 60000) / 1000;
+            String saveString = String.format("[%02d:%05.2f]%s", min, sec, text);
             return saveString;
         }
     }

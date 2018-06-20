@@ -24,7 +24,7 @@ public class TxtEditor extends View {
     private int lastY;
     private int viewHeight;
     private float lrcOffset;
-    private int endLine=0;
+    private int endLine = 0;
     private float offsetE;
     private GestureDetector gestureDetector;
     private boolean isSaved = false;
@@ -33,19 +33,21 @@ public class TxtEditor extends View {
         super(context, attributeSet, defStyleAttr);
         init();
     }
+
     public TxtEditor(Context context, AttributeSet attributeSet) {
-        this(context, attributeSet,0);
+        this(context, attributeSet, 0);
 
     }
+
     public TxtEditor(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public List<LrcString> getLrcStrings() {
         return lrcStrings;
     }
 
-    private void init(){
+    private void init() {
         lrcStrings = new ArrayList<>();
         textPaint = new TextPaint();
         textPaint.setAntiAlias(true);
@@ -58,39 +60,39 @@ public class TxtEditor extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        textDraw(lrcStrings,canvas,textPaint);
+        textDraw(lrcStrings, canvas, textPaint);
     }
 
 
-    private void textDraw(List<LrcString> strings, Canvas canvas, TextPaint paint){
+    private void textDraw(List<LrcString> strings, Canvas canvas, TextPaint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
-        float top=fontMetrics.top;
-        float bottom=fontMetrics.bottom;
-        float offset=bottom - top;
+        float top = fontMetrics.top;
+        float bottom = fontMetrics.bottom;
+        float offset = bottom - top;
         offsetE = offset;
         float totleOffset = 0;
         int stringLen = strings.size();
-        if(stringLen == 0){
-            StaticLayout staticLayout = new StaticLayout("请输入歌词", textPaint, (int)getWidth(),
+        if (stringLen == 0) {
+            StaticLayout staticLayout = new StaticLayout("请输入歌词", textPaint, (int) getWidth(),
                     Layout.Alignment.ALIGN_CENTER, 1f, 0f, false);
-            drawText(canvas,staticLayout,getHeight()/2);
+            drawText(canvas, staticLayout, getHeight() / 2);
             scrollTo(0, 0);
-        }else {
-            for(LrcString temp:strings){
-                temp.init(paint,getWidth());
+        } else {
+            for (LrcString temp : strings) {
+                temp.init(paint, getWidth());
             }
-            for(int i=0;i<stringLen;i++){
+            for (int i = 0; i < stringLen; i++) {
                 if (i > 0) {
                     totleOffset += strings.get(i - 1).getHeight() + offset;
                 }
-                if(i==stringLen-1) {
-                    lrcOffset = canvas.getHeight() - totleOffset - 2*offset -strings.get(stringLen-1).getHeight();
+                if (i == stringLen - 1) {
+                    lrcOffset = canvas.getHeight() - totleOffset - 2 * offset - strings.get(stringLen - 1).getHeight();
                     strings.get(i).setOffset(lrcOffset);
                 }
                 drawText(canvas, strings.get(i).getStaticLayout(), totleOffset);
             }
-            if(isNewAdd){
-                scrollTo(0, -(int)(strings.get(stringLen-1).getOffset()));
+            if (isNewAdd) {
+                scrollTo(0, -(int) (strings.get(stringLen - 1).getOffset()));
                 isNewAdd = false;
             }
         }
@@ -104,8 +106,8 @@ public class TxtEditor extends View {
     }
 
     //添加歌词函数
-    public void addLrcString(String string){
-        LrcString lrcString= new LrcString(string);
+    public void addLrcString(String string) {
+        LrcString lrcString = new LrcString(string);
         lrcStrings.add(lrcString);
         isNewAdd = true;
         isSaved = false;
@@ -113,8 +115,8 @@ public class TxtEditor extends View {
     }
 
     //删除最后一句歌词
-    public void removeLrcString(){
-        lrcStrings.remove(lrcStrings.size()-1);
+    public void removeLrcString() {
+        lrcStrings.remove(lrcStrings.size() - 1);
         isNewAdd = true;
         isSaved = false;
         invalidate();
@@ -148,6 +150,7 @@ public class TxtEditor extends View {
     public boolean onTouchEvent(MotionEvent motionEvent) {
         return gestureDetector.onTouchEvent(motionEvent);
     }
+
     private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
@@ -156,7 +159,7 @@ public class TxtEditor extends View {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            if(!lrcStrings.isEmpty()){
+            if (!lrcStrings.isEmpty()) {
                 removeLrcString();
             }
             return true;
@@ -164,16 +167,16 @@ public class TxtEditor extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            int y = (int)distanceY;
-            if(!lrcStrings.isEmpty()){
-                scrollBy(0,y);
+            int y = (int) distanceY;
+            if (!lrcStrings.isEmpty()) {
+                scrollBy(0, y);
                 //这条式子真是反人类，重构的时候优先改善
-                float a = -lrcStrings.get(lrcStrings.size()-1).getOffset()+getHeight()-lrcStrings.get(lrcStrings.size()-1).getHeight()-3*offsetE;
-                if(getScrollY()<-lrcStrings.get(0).getOffset()-offsetE){
-                    scrollTo(0, -(int)(lrcStrings.get(0).getOffset()+offsetE));
+                float a = -lrcStrings.get(lrcStrings.size() - 1).getOffset() + getHeight() - lrcStrings.get(lrcStrings.size() - 1).getHeight() - 3 * offsetE;
+                if (getScrollY() < -lrcStrings.get(0).getOffset() - offsetE) {
+                    scrollTo(0, -(int) (lrcStrings.get(0).getOffset() + offsetE));
                 }
-                if(getScrollY()>a){
-                    scrollTo(0, (int)(a));
+                if (getScrollY() > a) {
+                    scrollTo(0, (int) (a));
                 }
             }
 

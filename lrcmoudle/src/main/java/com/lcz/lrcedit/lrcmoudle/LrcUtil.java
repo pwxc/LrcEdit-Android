@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 public class LrcUtil {
 
     //获取歌手名
-    public static String getArtist(String lrcString){
+    public static String getArtist(String lrcString) {
         String pattern = "\\[ar:(.*)\\]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(lrcString);
-        if (m.find( )) {
+        if (m.find()) {
             return m.group(1);
         } else {
             return null;
@@ -18,11 +18,11 @@ public class LrcUtil {
     }
 
     //获取曲名
-    public static String getTitle(String lrcString){
+    public static String getTitle(String lrcString) {
         String pattern = "\\[ti:(.*)\\]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(lrcString);
-        if (m.find( )) {
+        if (m.find()) {
             return m.group(1);
         } else {
             return null;
@@ -30,11 +30,11 @@ public class LrcUtil {
     }
 
     //获取专辑名
-    public static String getAlbum(String lrcString){
+    public static String getAlbum(String lrcString) {
         String pattern = "\\[al:(.*)\\]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(lrcString);
-        if (m.find( )) {
+        if (m.find()) {
             return m.group(1);
         } else {
             return null;
@@ -42,11 +42,11 @@ public class LrcUtil {
     }
 
     //获取编辑者名
-    public static String getEditer(String lrcString){
+    public static String getEditor(String lrcString) {
         String pattern = "\\[by:(.*)\\]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(lrcString);
-        if (m.find( )) {
+        if (m.find()) {
             return m.group(1);
         } else {
             return null;
@@ -54,11 +54,11 @@ public class LrcUtil {
     }
 
     //获取offset
-    public static String getOffset(String lrcString){
+    public static String getOffset(String lrcString) {
         String pattern = "\\[offset:(.*)\\]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(lrcString);
-        if (m.find( )) {
+        if (m.find()) {
             return m.group(1);
         } else {
             return null;

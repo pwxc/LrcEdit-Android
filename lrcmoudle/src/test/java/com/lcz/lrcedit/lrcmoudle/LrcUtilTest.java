@@ -15,7 +15,7 @@ public class LrcUtilTest {
     }
 
     @Test
-    public void getAlbum(){
+    public void getAlbum() {
         assertEquals("中文", LrcUtil.getAlbum("[al:中文]"));
         assertEquals("1125", LrcUtil.getAlbum("[al:1125]"));
         assertEquals("[1125]", LrcUtil.getAlbum("[al:[1125]]"));
@@ -23,15 +23,15 @@ public class LrcUtilTest {
     }
 
     @Test
-    public void getEditer(){
-        assertEquals("中文", LrcUtil.getEditer("[by:中文]"));
-        assertEquals("1125", LrcUtil.getEditer("[by:1125]"));
-        assertEquals("[1125]", LrcUtil.getEditer("[by:[1125]]"));
-        assertEquals(null, LrcUtil.getEditer("[by1235]"));
+    public void getEditor() {
+        assertEquals("中文", LrcUtil.getEditor("[by:中文]"));
+        assertEquals("1125", LrcUtil.getEditor("[by:1125]"));
+        assertEquals("[1125]", LrcUtil.getEditor("[by:[1125]]"));
+        assertEquals(null, LrcUtil.getEditor("[by1235]"));
     }
 
     @Test
-    public void getTitle(){
+    public void getTitle() {
         assertEquals("中文", LrcUtil.getTitle("[ti:中文]"));
         assertEquals("1125", LrcUtil.getTitle("[ti:1125]"));
         assertEquals("[1125]", LrcUtil.getTitle("[ti:[1125]]"));
@@ -39,7 +39,7 @@ public class LrcUtilTest {
     }
 
     @Test
-    public void getOffset(){
+    public void getOffset() {
         assertEquals("中文", LrcUtil.getOffset("[offset:中文]"));
         assertEquals("1125", LrcUtil.getOffset("[offset:1125]"));
         assertEquals("[1125]", LrcUtil.getOffset("[offset:[1125]]"));

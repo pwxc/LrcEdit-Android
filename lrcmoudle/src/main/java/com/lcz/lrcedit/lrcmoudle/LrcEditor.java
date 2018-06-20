@@ -39,14 +39,16 @@ public class LrcEditor extends View {
         super(context, attributeSet, defStyleAttr);
         init();
     }
+
     public LrcEditor(Context context, AttributeSet attributeSet) {
-        this(context, attributeSet,0);
-    }
-    public LrcEditor(Context context) {
-        this(context,null);
+        this(context, attributeSet, 0);
     }
 
-    private void init(){
+    public LrcEditor(Context context) {
+        this(context, null);
+    }
+
+    private void init() {
         lrcStrings = new ArrayList<>();
 
         textPaint = new TextPaint();
@@ -55,7 +57,7 @@ public class LrcEditor extends View {
         textPaint.setTextAlign(Paint.Align.LEFT);
 
         linePaint = new Paint();
-        linePaint.setARGB(0x80,0x8A,0x8A,0x8A);
+        linePaint.setARGB(0x80, 0x8A, 0x8A, 0x8A);
         linePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         linePaint.setStrokeWidth(5);
 
@@ -64,20 +66,20 @@ public class LrcEditor extends View {
     }
 
     //初始化时间添加函数
-    public void timeAddInit(){
+    public void timeAddInit() {
         editType = TIMEADD;
         currentLine = 0;
-        startTime=System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         moveCenterLine(0);
         invalidate();
     }
 
-    private void moveCenterLine(int lineNumber){
-        if(lineNumber>=0 && lineNumber<lrcStrings.size()){
-            scrollTo(0,(int)lrcStrings.get(lineNumber).getOffset() - getHeight()/2);
-            if(editType == TIMEADD){
+    private void moveCenterLine(int lineNumber) {
+        if (lineNumber >= 0 && lineNumber < lrcStrings.size()) {
+            scrollTo(0, (int) lrcStrings.get(lineNumber).getOffset() - getHeight() / 2);
+            if (editType == TIMEADD) {
                 lrcStrings.get(lineNumber).setStartTime(System.currentTimeMillis() - startTime);
-                Log.e("time",lrcStrings.get(lineNumber).getStartTime()+"");
+                Log.e("time", lrcStrings.get(lineNumber).getStartTime() + "");
             }
 
         }
@@ -87,41 +89,41 @@ public class LrcEditor extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(!lrcStrings.isEmpty()){
-            textDraw(lrcStrings,canvas,textPaint);
-            if(isNewAdd){
+        if (!lrcStrings.isEmpty()) {
+            textDraw(lrcStrings, canvas, textPaint);
+            if (isNewAdd) {
                 moveCenterLine(0);
                 isNewAdd = false;
             }
-            if(editType == TIMEADD){
+            if (editType == TIMEADD) {
                 moveCenterLine(currentLine);
-                canvas.drawLine(0,getHeight()/2+getScrollY()+offset/2,getWidth(),getHeight()/2+getScrollY()+offset/2,linePaint);
+                canvas.drawLine(0, getHeight() / 2 + getScrollY() + offset / 2, getWidth(), getHeight() / 2 + getScrollY() + offset / 2, linePaint);
             }
         }
 
 
     }
 
-    private void textDraw(List<LrcString> strings, Canvas canvas, TextPaint paint){
+    private void textDraw(List<LrcString> strings, Canvas canvas, TextPaint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float top = fontMetrics.top;
         float bottom = fontMetrics.bottom;
         offset = bottom - top;
-        for(int i=0;i<strings.size();i++){
-            if(i == currentLine){
+        for (int i = 0; i < strings.size(); i++) {
+            if (i == currentLine) {
                 paint.setColor(Color.RED);
-            }else if(i > currentLine){
+            } else if (i > currentLine) {
                 paint.setColor(Color.GRAY);
-            }else {
+            } else {
                 paint.setColor(Color.BLUE);
             }
-            strings.get(i).init(paint,getWidth());
-            if(i == 0){
-                strings.get(i).setOffset(-offset/2);
-            }else {
-                strings.get(i).setOffset(strings.get(i-1).getOffset()+strings.get(i-1).getHeight()+offset);
+            strings.get(i).init(paint, getWidth());
+            if (i == 0) {
+                strings.get(i).setOffset(-offset / 2);
+            } else {
+                strings.get(i).setOffset(strings.get(i - 1).getOffset() + strings.get(i - 1).getHeight() + offset);
             }
-            drawText(canvas,strings.get(i).getStaticLayout(),strings.get(i).getOffset());
+            drawText(canvas, strings.get(i).getStaticLayout(), strings.get(i).getOffset());
         }
 
     }
@@ -134,16 +136,16 @@ public class LrcEditor extends View {
     }
 
     //初始化字符串数据
-    public void initStrings(ArrayList<String> lrcEdits){
-        for (String string:lrcEdits){
+    public void initStrings(ArrayList<String> lrcEdits) {
+        for (String string : lrcEdits) {
             addLrcString(string);
         }
         isNewAdd = true;
         editType = NORMAL;
     }
 
-    public void addLrcString(String string){
-        LrcString lrcString= new LrcString(string);
+    public void addLrcString(String string) {
+        LrcString lrcString = new LrcString(string);
         lrcStrings.add(lrcString);
     }
 
@@ -161,18 +163,18 @@ public class LrcEditor extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if(editType == NORMAL){
-                int y = (int)distanceY;
-                if(!lrcStrings.isEmpty()){
-                    scrollBy(0,y);
+            if (editType == NORMAL) {
+                int y = (int) distanceY;
+                if (!lrcStrings.isEmpty()) {
+                    scrollBy(0, y);
                     //这条式子真是反人类，重构的时候优先改善
-                    float top = lrcStrings.get(0).getOffset() - getHeight()/2;
-                    float bottom = lrcStrings.get(lrcStrings.size()-1).getOffset() - getHeight()/2;
-                    if(getScrollY()<top){
-                        scrollTo(0, (int)top);
+                    float top = lrcStrings.get(0).getOffset() - getHeight() / 2;
+                    float bottom = lrcStrings.get(lrcStrings.size() - 1).getOffset() - getHeight() / 2;
+                    if (getScrollY() < top) {
+                        scrollTo(0, (int) top);
                     }
-                    if(getScrollY()>bottom){
-                        scrollTo(0, (int)(bottom));
+                    if (getScrollY() > bottom) {
+                        scrollTo(0, (int) (bottom));
                     }
                 }
             }
@@ -181,13 +183,13 @@ public class LrcEditor extends View {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if(editType == TIMEADD){
-                if(currentLine<lrcStrings.size()-1){
+            if (editType == TIMEADD) {
+                if (currentLine < lrcStrings.size() - 1) {
                     currentLine++;
                     invalidate();
                 }
-                if(currentLine == lrcStrings.size()-1){
-                    Toast.makeText(getContext(),"lrc编辑完成，请保存",Toast.LENGTH_SHORT).show();
+                if (currentLine == lrcStrings.size() - 1) {
+                    Toast.makeText(getContext(), "lrc编辑完成，请保存", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;
@@ -208,8 +210,8 @@ public class LrcEditor extends View {
         return lrcStrings;
     }
 
-    public boolean isFinish(){
-        return currentLine == lrcStrings.size()-1;
+    public boolean isFinish() {
+        return currentLine == lrcStrings.size() - 1;
     }
 
 }
